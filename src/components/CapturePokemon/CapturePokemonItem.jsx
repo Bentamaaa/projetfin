@@ -1,57 +1,37 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const CapturePokemonItem = (props) => {
 
-    const [pokeName, setPokeName] = useState("")
-    const [pokeType, setPokeType] = useState("")
-    // poketype2
-    const [pokeId, setPokeId] = useState("")
-    const [pokeImg, setPokeImg] = useState("")
+    const {id, name, types, image} = props
 
-
-    
-    useEffect(() => {
-        if (pokemons) {
-            fetch("https://pokeapi.co/api/v2/pokemon/"+id
-            )
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    setPokeName(data.name)
-                    setPokeType(data.types[0].type.name)
-                    setPokeImg(data.sprites.other.official-artwork.front_default)
-                })
-        }
-    }, [pokemons])
-
-
-
+    const typeJSX = types.map(
+        t => <div className="poketype" key={t.type.name}>{t.type.name}</div>
+    )
 
     return(
-        <div href="#" id="01">
-            <div class="pokemonbox" >
-                <div class="poketop">
-                    <div class="poketopleft">
-                        <h2>{pokeName}</h2>
+        <a href="#">
+            <div className={types[0].type.name +" "+"pokemonbox"} >
+                <div className="poketop">
+                    <div className="poketopleft">
+                        <h2>{name}</h2>
                     </div>
-                    <div class="poketopright">
-                        <h3>#{pokeId}</h3>
+                    <div className="poketopright">
+                        <h3>#{id}</h3>
                     </div>
                 </div>
-                <div class="pokebot">
-                    <div class = "pokebotleft">
-                        <div class="type">
-                            <div></div>
-                            <div></div>
-
+                <div className="pokebot">
+                    <div className = "pokebotleft">
+                        <div className="type">
+                            {typeJSX}
                         </div>
+
                     </div>
-                    <div class="pokebotright">
-                        <img src={pokeImg} width="100%"/>
+                    <div className="pokebotright">
+                        <img src={image} width="100%"/>
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
     )
 }
 
