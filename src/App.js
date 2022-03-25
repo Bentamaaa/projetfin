@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import CapturePokemonList from './components/CapturePokemon/CapturePokemonList';
 import SearchPokemon from './components/SearchPokemon/searchPokemon';
@@ -7,8 +7,6 @@ import './styles.css';
 document.title="Pokedex"
 
 function App() {
-
-  let allPokemons = []
 
   const normalPoke = []
   const firePoke = []
@@ -31,12 +29,11 @@ function App() {
   const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
-    console.log(loaded)
     if (loaded) {
       const pokemonSorted = pokemon.sort(function(a, b) {
         return a.id - b.id 
       })
-      allPokemons = pokemonSorted
+      
 
       for (const data of pokemonSorted) {
 
@@ -92,7 +89,6 @@ function App() {
           
         }
       }
-      console.log(firePoke)
       
       setPokemon(p => pokemonSorted)
     }
@@ -120,13 +116,13 @@ function App() {
     
   const filterPokemon = function(normal, fire, water, electric, grass, ice, fighting, poison, ground, psychic, bug,
     ghost, dragon, dark, steel, fairy) {
+      console.log(pokemon)
       let newPokeList = []
-      for (const poke in allPokemons) {
+      for (const poke of pokemon) {
         if (normal && poke.types[0].type.name === "normal") {
           newPokeList.push(poke)
         } 
       }
-      console.log(newPokeList)
       setPokemon(prev => newPokeList)
     }
     
